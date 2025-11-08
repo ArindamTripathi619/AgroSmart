@@ -1,0 +1,55 @@
+version: '3.8'
+
+# Development version with hot-reload and mounted volumes
+
+services:
+  # Backend Service (Development mode with auto-reload)
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: agrosmart-backend-dev
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - RELOAD=true
+    volumes:
+      # Mount source code for hot-reload
+      - ./backend:/app
+      - /app/__pycache__
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - agrosmart-network
+
+  # Frontend Service (Development mode with Vite dev server)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      target: builder
+    container_name: agrosmart-frontend-dev
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+    volumes:
+      # Mount source code for hot-reload
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./index.html:/app/index.html
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./tsconfig.app.json:/app/tsconfig.app.json
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0
+    networks:
+      - agrosmart-network
+
+networks:
+  agrosmart-network:
+    driver: bridge

@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Backend Service (FastAPI + ML Models)
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: agrosmart-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Mount trained models (so they persist and can be updated)
+      - ./backend/trained_models:/app/trained_models:ro
+      # Mount datasets if needed
+      - ./backend/datasets:/app/datasets:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - agrosmart-network
+
+  # Frontend Service (React + Vite + Nginx)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: agrosmart-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    networks:
+      - agrosmart-network
+
+networks:
+  agrosmart-network:
+    driver: bridge
+
+volumes:
+  # Named volumes for persistence (if needed in future)
+  ml-models:
+    driver: local
