@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-inter text-neutral-900 bg-neutral-50 dark:bg-dark-bg dark:text-dark-text;
+  }
+
+  h1 {
+    @apply text-h1 font-poppins font-bold leading-heading;
+  }
+
+  h2 {
+    @apply text-h2 font-poppins font-bold leading-heading;
+  }
+
+  h3 {
+    @apply text-h3 font-poppins font-semibold leading-heading;
+  }
+
+  p {
+    @apply text-body leading-body;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-md py-sm font-poppins font-medium text-white rounded-lg bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 transition-all duration-200 hover:shadow-lg hover:shadow-primary-500/30 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply px-md py-sm font-poppins font-medium text-primary-600 rounded-lg bg-primary-50 hover:bg-primary-100 transition-all duration-200 dark:bg-primary-900 dark:text-primary-300 dark:hover:bg-primary-800;
+  }
+
+  .btn-ghost {
+    @apply px-md py-sm font-poppins font-medium text-primary-600 rounded-lg hover:bg-primary-50 transition-all duration-200 dark:text-primary-300 dark:hover:bg-primary-900;
+  }
+
+  .card {
+    @apply bg-white dark:bg-dark-surface rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 dark:border dark:border-neutral-700;
+  }
+
+  .input-field {
+    @apply w-full px-md py-sm font-inter text-body rounded-lg border border-neutral-300 bg-white focus:outline-none focus:ring-2 focus:ring-accent-300 focus:border-transparent transition-all duration-200 dark:bg-dark-surface dark:border-neutral-600 dark:text-dark-text;
+  }
+
+  .form-label {
+    @apply block text-small font-medium text-neutral-700 dark:text-neutral-300 mb-xs;
+  }
+
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary-500 to-primary-600;
+  }
+
+  .gradient-accent {
+    @apply bg-gradient-to-r from-accent-400 to-accent-500;
+  }
+}
