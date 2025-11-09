@@ -1,7 +1,8 @@
 // API Service Layer for AgroSmart
 // This replaces direct Supabase calls with backend API calls
 
-const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:8000/api';
+// Use relative URL to work through nginx proxy in Docker, or direct URL in development
+const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || '/api';
 
 // Types for API requests and responses
 export interface CropPredictionInput {
