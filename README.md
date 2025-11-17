@@ -464,8 +464,8 @@ This project is created for educational and demonstration purposes.
 ## 📧 Contact
 
 For questions or feedback:
-- **Email**: info@agrosmart.com
-- **GitHub**: [arindxm/AgroSmart](https://github.com/arindxm/AgroSmart)
+- **Email**: devcrewx@gmail.com
+- **GitHub**: [ArindamTripathi619/AgroSmart](https://github.com/ArindamTripathi619/AgroSmart)
 
 ---
 
